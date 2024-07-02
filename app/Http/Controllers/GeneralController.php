@@ -9,6 +9,7 @@ use App\FooterSetting;
 use App\FormSetting;
 use App\MenuItem;
 use App\OurService;
+use App\SeoPage;
 use App\SocialMediaLink;
 use App\Statistic;
 use App\Testimonial;
@@ -26,8 +27,8 @@ class GeneralController extends Controller
         $footer_settings = FooterSetting::first();
         $footer_details = FooterDetail::get();
         $social_media_links = SocialMediaLink::orderBy('ht_pos')->get();
-
-        return compact('menu_items', 'footer_settings', 'footer_details', 'social_media_links', 'logo');
+        $seo_settings = SeoPage::where('slug', 'home')->firstOrFail();
+        return compact('menu_items', 'footer_settings', 'footer_details', 'social_media_links', 'logo', 'seo_settings');
     }
 
     function index()
@@ -38,6 +39,8 @@ class GeneralController extends Controller
         $testimonials = Testimonial::orderBy('ht_pos')->get();
         $statistics = Statistic::orderBy('ht_pos')->get();
         $form_settings = FormSetting::firstOrFail();
+
+
         return compact('settings', 'services', 'the_hub_sections', 'testimonials', 'statistics', 'form_settings');
     }
 
