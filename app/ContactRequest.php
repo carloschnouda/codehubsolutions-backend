@@ -15,7 +15,7 @@ class ContactRequest extends Model
 
     
 
-	public function service() { return $this->belongsTo('App\OurService'); } 
+	public function service() { return $this->belongsTo('App\OurService'); } public function subject() { return $this->belongsTo('App\TheHubSection'); } 
 
     /* Start custom functions */
 

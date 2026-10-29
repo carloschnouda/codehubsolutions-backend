@@ -9,7 +9,8 @@
     <p><b>Full Name: </b>{{ $new_request->name }}</p>
     <p><b>Email: </b>{{ $new_request->email }}</p>
     <p><b>Phone Number: </b>{{ $new_request->phone_number }}</p>
-    <p><b>Subject: </b>{{ $new_request->service->title }}</p>
+    <p><b>Service: </b>{{ $new_request->service->title }}</p>
+    <p><b>Subject: </b>{{ $new_request->subject->title }}</p>
     <p><b>Message: </b>{{ $new_request->message }}</p>
 
     <br><br>
