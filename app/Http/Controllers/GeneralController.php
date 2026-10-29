@@ -47,19 +47,21 @@ class GeneralController extends Controller
     function submit(Request $request)
     {
         $admin_email = FormSetting::first()->admin_email;
+        $second_admin_email = FormSetting::first()->second_admin_email;
 
         $request->validate(
             [
                 'name' => 'required',
                 'email' => 'required|email',
                 'phone_number' => 'required|numeric',
-                'subject' => 'required',
+                'subject_id' => 'required',
                 'service_id' => 'required',
                 'file' => 'required|mimes:doc,docx,pdf,pptx,ppt',
                 'message' => 'required'
             ],
             [
                 'service_id.required' => 'The Service is required',
+                'subject_id.required' => 'The Subject is required',
             ]
         );
 
@@ -67,7 +69,7 @@ class GeneralController extends Controller
         $new_request->name = $request->name;
         $new_request->email = $request->email;
         $new_request->phone_number = $request->phone_number;
-        $new_request->subject = $request->subject;
+        $new_request->subject_id = $request->subject_id;
         $new_request->service_id = $request->service_id;
         $new_request->message = $request->message;
         if ($request->file) {
@@ -80,5 +82,13 @@ class GeneralController extends Controller
         Mail::send('emails.contact', compact('new_request'), function ($message) use ($new_request, $admin_email) {
             $message->to($admin_email)->attach(Storage::path($new_request->file))->subject('Contact Request');
         });
+        
+        if($second_admin_email)
+        {
+             Mail::send('emails.contact', compact('new_request'), function ($message) use ($new_request, $second_admin_email) {
+            $message->to($second_admin_email)->attach(Storage::path($new_request->file))->subject('Contact Request');
+            });
+        }
+        
     }
 }

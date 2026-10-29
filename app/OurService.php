@@ -13,9 +13,10 @@ class OurService extends Model
 
     protected $guarded = ['id'];
 
+    public $with =['services_category'];
     
 
-	
+	public function services_category() { return $this->belongsTo('App\ServicesCategory'); } 
 
     /* Start custom functions */
 
